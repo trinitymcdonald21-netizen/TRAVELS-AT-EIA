@@ -1,0 +1,92 @@
+[
+  {
+    "id": 1,
+    "name": "Sarah Nakato",
+    "year": "Year 10",
+    "fee": 120000,
+    "residence": "Kampala",
+    "paid": true,
+    "date_added": "2026-02-10 09:30:00"
+  },
+  {
+    "id": 2,
+    "name": "David Okello",
+    "year": "Year 12",
+    "fee": 150000,
+    "residence": "Entebbe",
+    "paid": true,
+    "date_added": "2026-02-10 10:15:00"
+  },
+  {
+    "id": 3,
+    "name": "Grace Namukasa",
+    "year": "Year 9",
+    "fee": 100000,
+    "residence": "Kampala",
+    "paid": false,
+    "date_added": "2026-02-11 08:45:00"
+  },
+  {
+    "id": 4,
+    "name": "Joseph Ssemakula",
+    "year": "Year 13",
+    "fee": 180000,
+    "residence": "Jinja",
+    "paid": true,
+    "date_added": "2026-02-11 11:20:00"
+  },
+  {
+    "id": 5,
+    "name": "Rebecca Auma",
+    "year": "Year 8",
+    "fee": 90000,
+    "residence": "Entebbe",
+    "paid": false,
+    "date_added": "2026-02-12 09:00:00"
+  },
+  {
+    "id": 6,
+    "name": "Michael Kiprotich",
+    "year": "Year 11",
+    "fee": 135000,
+    "residence": "Kampala",
+    "paid": true,
+    "date_added": "2026-02-12 14:30:00"
+  },
+  {
+    "id": 7,
+    "name": "Patricia Nalwoga",
+    "year": "Year 10",
+    "fee": 120000,
+    "residence": "Mukono",
+    "paid": false,
+    "date_added": "2026-02-13 10:00:00"
+  },
+  {
+    "id": 8,
+    "name": "Emmanuel Wasswa",
+    "year": "Year 12",
+    "fee": 150000,
+    "residence": "Jinja",
+    "paid": true,
+    "date_added": "2026-02-13 15:45:00"
+  },
+  {
+    "id": 9,
+    "name": "Susan Nabirye",
+    "year": "Year 9",
+    "fee": 100000,
+    "residence": "Kampala",
+    "paid": true,
+    "date_added": "2026-02-14 08:30:00"
+  },
+  {
+    "id": 10,
+    "name": "Andrew Mugisha",
+    "year": "Year 13",
+    "fee": 180000,
+    "residence": "Entebbe",
+    "paid": false,
+    "date_added": "2026-02-14 13:15:00"
+  }
+]

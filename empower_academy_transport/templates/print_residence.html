@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ residence_name }} - Student List</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <style>
+        @media print {
+            .no-print {
+                display: none !important;
+            }
+            
+            body {
+                background: white;
+                padding: 0;
+            }
+            
+            .print-container {
+                max-width: 100%;
+                margin: 0;
+                box-shadow: none;
+            }
+            
+            .print-header {
+                border-bottom: 3px solid #333;
+            }
+            
+            .residence-section {
+                page-break-inside: avoid;
+            }
+            
+            table {
+                page-break-inside: auto;
+            }
+            
+            tr {
+                page-break-inside: avoid;
+                page-break-after: auto;
+            }
+        }
+        
+        .residence-badge {
+            display: inline-block;
+            background: linear-gradient(135deg, #1a5490 0%, #2c7cc1 100%);
+            color: white;
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-size: 20px;
+            font-weight: bold;
+            margin: 20px 0;
+            box-shadow: 0 4px 12px rgba(26, 84, 144, 0.3);
+        }
+        
+        .new-residence-alert {
+            background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+            color: white;
+            padding: 16px 24px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            box-shadow: 0 4px 12px rgba(40, 167, 69, 0.3);
+        }
+        
+        .new-residence-alert svg {
+            flex-shrink: 0;
+        }
+    </style>
+</head>
+<body class="print-page">
+    <div class="no-print" style="padding: 20px; text-align: center; background: #f5f5f5; border-bottom: 2px solid #003366;">
+        <div style="display: flex; justify-content: center; gap: 15px; align-items: center;">
+            <button onclick="window.print()" class="btn-primary" style="padding: 12px 30px; font-size: 16px; display: inline-flex; align-items: center; gap: 8px;">
+                <svg width="20" height="20" viewBox="0 0 20 20" fill="none" style="vertical-align: middle;">
+                    <path d="M16 8H14V4H6V8H4C2.9 8 2 8.9 2 10V14H6V18H14V14H18V10C18 8.9 17.1 8 16 8ZM8 6H12V8H8V6ZM12 16H8V12H12V16ZM14 11.5C13.17 11.5 12.5 10.83 12.5 10C12.5 9.17 13.17 8.5 14 8.5C14.83 8.5 15.5 9.17 15.5 10C15.5 10.83 14.83 11.5 14 11.5Z" fill="currentColor"/>
+                </svg>
+                Print {{ residence_name }} List
+            </button>
+            <button onclick="window.close()" class="btn-secondary" style="padding: 12px 30px; font-size: 16px;">Close Window</button>
+        </div>
+        <p style="margin-top: 15px; color: #666; font-size: 14px;">
+            💡 Tip: Use Ctrl+P (Windows) or Cmd+P (Mac) to print quickly
+        </p>
+    </div>
+
+    <div class="print-container">
+        <div class="print-header">
+            <div class="school-info">
+                <img src="{{ url_for('static', filename='images/empower_logo.jpg') }}" alt="Empower International Academy" style="width: 80px; height: auto; object-fit: contain; margin-right: 15px;">
+                <div>
+                    <h1>Empower International Academy</h1>
+                    <p>Student Transportation Registry</p>
+                </div>
+            </div>
+            <div class="print-meta">
+                <p><strong>Print Date:</strong> <span id="printDate"></span></p>
+                <p><strong>Residence:</strong> {{ residence_name }}</p>
+                <p><strong>Total Students:</strong> {{ total_students }}</p>
+            </div>
+        </div>
+
+        <div class="residence-badge">
+            📍 {{ residence_name }} Transport List
+        </div>
+
+        {% if grouped_students %}
+            {% for residence, students in grouped_students.items() %}
+            <div class="residence-section">
+                <h2 class="residence-title">{{ residence }} ({{ students|length }} students)</h2>
+                
+                <table class="print-table">
+                    <thead>
+                        <tr>
+                            <th style="width: 5%;">#</th>
+                            <th style="width: 35%;">Student Name</th>
+                            <th style="width: 15%;">Year/Class</th>
+                            <th style="width: 20%;">Transportation Fee</th>
+                            <th style="width: 15%;">Residence</th>
+                            <th style="width: 10%;">Paid</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for student in students %}
+                        <tr>
+                            <td>{{ loop.index }}</td>
+                            <td><strong>{{ student.name }}</strong></td>
+                            <td>{{ student.year }}</td>
+                            <td>UGX {{ "{:,.0f}".format(student.fee) }}</td>
+                            <td>{{ student.residence }}</td>
+                            <td class="paid-cell">
+                                {% if student.paid %}
+                                <span class="checkmark">✓</span>
+                                {% else %}
+                                <span class="empty-check">—</span>
+                                {% endif %}
+                            </td>
+                        </tr>
+                        {% endfor %}
+                        <tr class="subtotal-row">
+                            <td colspan="3"><strong>Subtotal for {{ residence }}</strong></td>
+                            <td><strong>UGX {{ "{:,.0f}".format(students|sum(attribute='fee')) }}</strong></td>
+                            <td colspan="2"></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            {% endfor %}
+            
+            <div class="print-footer">
+                <div class="summary-box">
+                    <h3>{{ residence_name }} Summary</h3>
+                    <table class="summary-table">
+                        <tr>
+                            <td>Total Students in {{ residence_name }}:</td>
+                            <td><strong>{{ total_students }}</strong></td>
+                        </tr>
+                        <tr>
+                            <td>Total Fees for {{ residence_name }}:</td>
+                            <td><strong>UGX {{ "{:,.0f}".format(students|sum(attribute='fee')) }}</strong></td>
+                        </tr>
+                        <tr>
+                            <td>Students Paid:</td>
+                            <td><strong>{{ students|selectattr('paid')|list|length }}</strong></td>
+                        </tr>
+                        <tr>
+                            <td>Students Unpaid:</td>
+                            <td><strong>{{ total_students - (students|selectattr('paid')|list|length) }}</strong></td>
+                        </tr>
+                    </table>
+                </div>
+                
+                <div class="signature-section">
+                    <div class="signature-line">
+                        <div class="line"></div>
+                        <p>Prepared By: {{ session.get('username', 'Administrator') }}</p>
+                    </div>
+                    <div class="signature-line">
+                        <div class="line"></div>
+                        <p>Verified By</p>
+                    </div>
+                </div>
+            </div>
+        {% else %}
+        <div class="empty-state">
+            <p>No students registered for {{ residence_name }}.</p>
+        </div>
+        {% endif %}
+    </div>
+
+    <script>
+        // Set print date
+        document.getElementById('printDate').textContent = new Date().toLocaleDateString('en-GB', {
+            day: '2-digit',
+            month: 'long',
+            year: 'numeric'
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - Empower International Academy Transport System</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body class="login-page">
+    <div class="login-container">
+        <div class="login-card">
+            <div class="school-logo">
+                <img src="{{ url_for('static', filename='images/empower_logo.jpg') }}" alt="Empower International Academy" style="width: 120px; height: auto; margin-bottom: 10px;">
+            </div>
+            <h1>Empower International Academy</h1>
+            <h2>Student Transportation System</h2>
+            
+            <form method="POST" action="{{ url_for('login') }}" class="login-form">
+                {% if error %}
+                <div class="error-message">
+                    <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+                        <path d="M10 0C4.48 0 0 4.48 0 10C0 15.52 4.48 20 10 20C15.52 20 20 15.52 20 10C20 4.48 15.52 0 10 0ZM11 15H9V13H11V15ZM11 11H9V5H11V11Z" fill="currentColor"/>
+                    </svg>
+                    {{ error }}
+                </div>
+                {% endif %}
+                
+                <div class="form-group">
+                    <label for="username">Username</label>
+                    <input type="text" id="username" name="username" required 
+                           placeholder="Enter your username" autocomplete="username">
+                </div>
+                
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" name="password" required 
+                           placeholder="Enter your password" autocomplete="current-password">
+                </div>
+                
+                <button type="submit" class="btn-primary">Sign In</button>
+                
+                <div class="login-info">
+                    <p><strong>Authorized User:</strong> Isaac Aijuka</p>
+                </div>
+            </form>
+        </div>
+        
+        <div class="login-footer">
+            <p>&copy; 2026 Empower International Academy. All rights reserved.</p>
+        </div>
+    </div>
+</body>
+</html>
